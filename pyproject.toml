@@ -1,0 +1,51 @@
+[project]
+name = "AreasofControl"
+version = "0.1.0"
+description = "Package to get Russian Areas of control in Ukraine"
+authors = [
+    {name = "GISRedeDev", email = "dm@gisrede.com"},
+]
+dependencies = [
+    "geopandas>=0.14.4",
+    "pytest>=8.2.2",
+    "black>=24.4.2",
+    "mypy>=1.10.0",
+    "flake8>=7.1.0",
+    "isort>=5.13.2",
+]
+requires-python = ">=3.11"
+readme = "README.md"
+license = {text = "MIT"}
+
+[build-system]
+requires = ["pdm-backend"]
+build-backend = "pdm.backend"
+
+
+[tool.pdm]
+distribution = true
+
+[tool.pdm.dev-dependencies]
+test = ["pytest"]
+lint = ["black", "flake8", "isort", "mypy"]
+doc = ["sphinx"]
+
+[tool.pdm.scripts]
+test = "pytest tests"
+test_integration = "pytest tests -m integration"
+black = "black areasofcontrol/ tests/"
+black-check = "black --check areasofcontrol/ tests/"
+flake8 = "flake8 areasofcontrol tests"
+flake8-check = "flake8 --count areasofcontrol tests"
+isort = "isort areasofcontrol tests"
+isort-check = "isort --check-only areasofcontrol tests"
+mypy = "mypy areasofcontrol tests"
+mypy-check = "mypy --check areasofcontrol tests"
+lint = {composite = ["black", "flake8", "isort", "mypy"]}
+lint-check = {composite = ["black-check", "flake8-check", "isort-check", "mypy-check"]}
+
+[tool.flake8]
+max-line-length = 120
+
+[tool.isort]
+profile = "black"

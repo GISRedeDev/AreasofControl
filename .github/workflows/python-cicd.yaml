@@ -1,0 +1,32 @@
+name: Python package
+
+on: [push, pull_request]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.x'
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install pdm
+        pdm install -d
+    - name: Install linters and type checker
+      run: |
+        pdm add --dev black flake8 isort mypy
+    - name: Check code formatting and linting
+      run: |
+        pdm lint-check
+    - name: Run tests
+      run: |
+        pdm test -m "not integration"
+    - name: Run integration tests
+      run: |
+        pdm test_integration
