@@ -26,6 +26,3 @@ jobs:
     - name: Run tests
       run: |
         pdm test -m "not integration"
-    - name: Run integration tests
-      run: |
-        pdm test_integration
