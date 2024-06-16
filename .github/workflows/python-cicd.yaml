@@ -16,8 +16,10 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install pdm
-        pdm install -d
+        python -m ensurepip
+        python -m pip install pdm
+        pdm install --prod
+        pdm install --dev
     - name: Install linters and type checker
       run: |
         pdm add --dev black flake8 isort mypy

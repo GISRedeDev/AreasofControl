@@ -12,6 +12,7 @@ dependencies = [
     "mypy>=1.10.0",
     "flake8>=7.1.0",
     "isort>=5.13.2",
+    "sphinx>=7.3.7",
 ]
 requires-python = ">=3.11"
 readme = "README.md"
