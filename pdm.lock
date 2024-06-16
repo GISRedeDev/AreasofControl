@@ -5,7 +5,7 @@
 groups = ["default"]
 strategy = ["cross_platform", "inherit_metadata"]
 lock_version = "4.4.1"
-content_hash = "sha256:17bf4a24f9354337d58555a04b6310a738de29a50b569b7e76977d1086db5195"
+content_hash = "sha256:0f7ed8608b35c5676c16861b772ca49409bf60e8e93869bbc5d2679c3c97dd6d"
 
 [[package]]
 name = "attrs"
