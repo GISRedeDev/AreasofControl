@@ -20,9 +20,6 @@ jobs:
         python -m pip install pdm
         pdm install --prod
         pdm install --dev
-    - name: Install linters and type checker
-      run: |
-        pdm add --dev black flake8 isort mypy
     - name: Check code formatting and linting
       run: |
         pdm lint-check
