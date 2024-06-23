@@ -1,8 +1,8 @@
 from datetime import datetime, timedelta
 from pathlib import Path
-import requests
 
 import geopandas as gpd
+import requests
 
 
 def get_history() -> list[int]:
@@ -18,7 +18,6 @@ def filter_ids(ids: list[int], start_date: str, end_date: str) -> list[int]:
     filtered_timestamps = [
         ts for ts in ids if start_dt <= datetime.fromtimestamp(ts) <= end_dt
     ]
-
     return filtered_timestamps
 
 
