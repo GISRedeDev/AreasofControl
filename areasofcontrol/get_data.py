@@ -18,3 +18,14 @@ def filter_ids(ids: list[int], start_date: str, end_date: str) -> list[int]:
     ]
 
     return filtered_timestamps
+
+
+def get_geojson(id: int) -> dict:
+    url = f"https://deepstatemap.live/api/history/{id}/geojson/"
+    response = requests.get(url)
+    polygon_features = []
+    for feature in response.json()["features"]:
+        if feature["geometry"]["type"] in ["Polygon", "MultiPolygon"]:
+            polygon_features.append(feature)
+    filtered_geojson = {"type": "FeatureCollection", "features": polygon_features}
+    return filtered_geojson
