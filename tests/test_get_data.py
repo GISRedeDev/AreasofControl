@@ -2,7 +2,6 @@ from datetime import datetime
 from pathlib import Path
 from unittest.mock import patch
 
-import fiona
 import pytest
 
 from areasofcontrol.get_data import (
@@ -55,11 +54,10 @@ def test_get_geojson(mock_get, geojson_key, geojson_mocks):
 def test_filter_and_save(mock_get, geojson_key, geojson_mocks):
     mock_get.return_value.json.return_value = geojson_mocks[geojson_key]
     geojson = get_geojson(1)
-    filter_and_save(geojson, 1706735973, TEST_DIR.joinpath("test.gpkg"))
+    filter_and_save(geojson, 1706735973, TEST_DIR)
+    layer = datetime.fromtimestamp(1706735973).strftime("%Y-%m-%d")
     if geojson_key == "positive":
-        assert TEST_DIR.joinpath("test.gpkg").exists()
-        layer = datetime.fromtimestamp(1706735973).strftime("%Y-%m-%d")
-        assert layer in fiona.listlayers(TEST_DIR.joinpath("test.gpkg"))
-        TEST_DIR.joinpath("test.gpkg").unlink()
+        assert TEST_DIR.joinpath(f"{layer}.gpkg").exists()
+        TEST_DIR.joinpath(f"{layer}.gpkg").unlink()
     else:
-        assert not TEST_DIR.joinpath("test.gpkg").exists()
+        assert not TEST_DIR.joinpath(f"{layer}.gpkg").exists()
