@@ -1,6 +1,8 @@
 from datetime import datetime, timedelta
-
+from pathlib import Path
 import requests
+
+import geopandas as gpd
 
 
 def get_history() -> list[int]:
@@ -29,3 +31,13 @@ def get_geojson(id: int) -> dict:
             polygon_features.append(feature)
     filtered_geojson = {"type": "FeatureCollection", "features": polygon_features}
     return filtered_geojson
+
+
+def filter_and_save(geojson: dict, id: int, gpkg: Path | str) -> None:
+    gdf = gpd.GeoDataFrame.from_features(geojson)
+    gdf = gdf[gdf["name"].str.contains("уп|ОРДЛО|Крим", case=False)]
+    if not gdf.empty:
+        layer = datetime.fromtimestamp(id).strftime("%Y-%m-%d")
+        gdf = gdf.dissolve(by=None)
+        gdf["date"] = layer
+        gdf.to_file(Path(gpkg), layer=layer, driver="GPKG")

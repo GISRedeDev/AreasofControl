@@ -1,9 +1,11 @@
 from unittest.mock import patch
+from pathlib import Path
 
 import pytest
 
-from areasofcontrol.get_data import filter_ids, get_geojson, get_history
+from areasofcontrol.get_data import filter_ids, get_geojson, get_history, filter_and_save
 
+TEST_DIR = Path(__file__).parent.joinpath("test_data")
 
 @patch("requests.get")
 def test_get_history(mock_get, get_history_mock_data):
@@ -38,3 +40,15 @@ def test_get_geojson(mock_get, geojson_key, geojson_mocks):
         x["geometry"]["type"] in ["Polygon", "MultiPolygon"]
         for x in geojson["features"]
     )
+
+@pytest.mark.parametrize("geojson_key", ["positive", "negative"])
+@patch("requests.get")
+def test_filter_and_save(mock_get, geojson_key, geojson_mocks):
+    mock_get.return_value.json.return_value = geojson_mocks[geojson_key]
+    geojson = get_geojson(1)
+    filter_and_save(geojson, 1706735973, TEST_DIR.joinpath("test.gpkg"))
+    if geojson_key == "positive":
+        assert TEST_DIR.joinpath("test.gpkg").exists()
+        TEST_DIR.joinpath("test.gpkg").unlink()
+    else:
+        assert not TEST_DIR.joinpath("test.gpkg").exists()
