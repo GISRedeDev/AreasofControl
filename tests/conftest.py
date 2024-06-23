@@ -1,6 +1,7 @@
 import json
-import pytest
 from pathlib import Path
+
+import pytest
 
 BASE_DATA = Path(__file__).parent.joinpath("test_data")
 
@@ -17,4 +18,3 @@ def ids_mock_data(get_history_mock_data):
     response = get_history_mock_data
     ids = [x["id"] for x in response]
     yield ids
-

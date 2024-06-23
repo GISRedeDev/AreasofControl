@@ -13,6 +13,7 @@ dependencies = [
     "flake8>=7.1.0",
     "isort>=5.13.2",
     "sphinx>=7.3.7",
+    "types-requests>=2.32.0.20240622",
 ]
 requires-python = ">=3.11"
 readme = "README.md"
