@@ -10,7 +10,8 @@ def get_history_mock_data():
     mock_history_json = BASE_DATA.joinpath("history.json")
     with open(mock_history_json, "r", encoding="utf-8") as f:
         yield json.load(f)
-    
+
+
 @pytest.fixture
 def ids_mock_data(get_history_mock_data):
     response = get_history_mock_data
