@@ -1,5 +1,5 @@
 [project]
-name = "AreasofControl"
+name = "areasofcontrol"
 version = "0.1.0"
 description = "Package to get Russian Areas of control in Ukraine"
 authors = [
