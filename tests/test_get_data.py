@@ -1,5 +1,7 @@
 from unittest.mock import patch
 from pathlib import Path
+import fiona
+from datetime import datetime
 
 import pytest
 
@@ -49,6 +51,10 @@ def test_filter_and_save(mock_get, geojson_key, geojson_mocks):
     filter_and_save(geojson, 1706735973, TEST_DIR.joinpath("test.gpkg"))
     if geojson_key == "positive":
         assert TEST_DIR.joinpath("test.gpkg").exists()
+        layer = datetime.fromtimestamp(1706735973).strftime("%Y-%m-%d")
+        assert layer in fiona.listlayers(TEST_DIR.joinpath("test.gpkg"))
         TEST_DIR.joinpath("test.gpkg").unlink()
+        
+
     else:
         assert not TEST_DIR.joinpath("test.gpkg").exists()
