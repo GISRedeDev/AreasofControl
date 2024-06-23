@@ -43,5 +43,5 @@ def filter_and_save(geojson: dict, id: int, gpkg_dir: Path | str) -> None:
         gdf = gdf.dissolve(by=None)
         gdf["date"] = layer
         gdf.to_file(
-            Path(gpkg_dir).joinpath(f"{layer}.gpkg"), layer=layer, driver="GPKG"
+            Path(gpkg_dir).joinpath(f"occupied_{layer}.gpkg"), layer=layer, driver="GPKG"
         )
