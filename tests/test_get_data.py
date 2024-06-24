@@ -57,7 +57,7 @@ def test_filter_and_save(mock_get, geojson_key, geojson_mocks):
     filter_and_save(geojson, 1706735973, TEST_DIR)
     layer = datetime.fromtimestamp(1706735973).strftime("%Y-%m-%d")
     if geojson_key == "positive":
-        assert TEST_DIR.joinpath(f"{layer}.gpkg").exists()
-        TEST_DIR.joinpath(f"{layer}.gpkg").unlink()
+        assert TEST_DIR.joinpath(f"occupied_{layer}.gpkg").exists()
+        TEST_DIR.joinpath(f"occupied_{layer}.gpkg").unlink()
     else:
-        assert not TEST_DIR.joinpath(f"{layer}.gpkg").exists()
+        assert not TEST_DIR.joinpath(f"occupied_{layer}.gpkg").exists()

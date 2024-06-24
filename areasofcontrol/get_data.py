@@ -36,12 +36,14 @@ def filter_and_save(geojson: dict, id: int, gpkg_dir: Path | str) -> None:
     assert Path(gpkg_dir).is_dir()
     if not Path(gpkg_dir).exists():
         Path(gpkg_dir).mkdir(parents=True)
-    gdf = gpd.GeoDataFrame.from_features(geojson)
+    gdf = gpd.GeoDataFrame.from_features(geojson, crs="EPSG:4326")
     gdf = gdf[gdf["name"].str.contains("уп|ОРДЛО|Крим", case=False)]
     if not gdf.empty:
         layer = datetime.fromtimestamp(id).strftime("%Y-%m-%d")
         gdf = gdf.dissolve(by=None)
         gdf["date"] = layer
         gdf.to_file(
-            Path(gpkg_dir).joinpath(f"{layer}.gpkg"), layer=layer, driver="GPKG"
+            Path(gpkg_dir).joinpath(f"occupied_{layer}.gpkg"),
+            layer=layer,
+            driver="GPKG",
         )
